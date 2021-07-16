@@ -38,10 +38,11 @@ jobs:
           git config --global user.name ${{ secrets.USER }}
           git add .
           git commit -m "update hosts" -a || echo "Nothing to update"
+          git push "https://Sirius2s:"${{ secrets.TOKEN }}"@github.com/Sirius2s/litkit.git" HEAD:main
       
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.TOKEN }}
-          repository: Sirius2s/litkit
-          # branch: ${{ github.ref }} # github.head_ref
+#       - name: Push changes
+#         uses: ad-m/github-push-action@master
+#         with:
+#           github_token: ${{ secrets.TOKEN }}
+#           repository: Sirius2s/litkit
+#           # branch: ${{ github.ref }} # github.head_ref
