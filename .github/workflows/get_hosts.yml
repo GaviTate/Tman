@@ -18,10 +18,11 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           repository: Sirius2s/litkit
-          ref: main
+          token: ${{ secrets.TOKEN }}
+#           ref: main
 #           ref: $REPO_BRANCH
         
       - name: 'Set up Python'
