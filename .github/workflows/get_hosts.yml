@@ -1,0 +1,47 @@
+name: GetHosts
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 0 * * 1'
+  # watch:
+  #   types: started
+  repository_dispatch:
+    types: GetHosts
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          repository: Sirius2s/litkit
+        
+      - name: 'Set up Python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+         
+      - name: 'Install requirements'
+        run: pip install -r ./requirements.txt 
+        
+      - name: 'GetHosts' 
+        run: python3 ./gethosts/get_hosts.py
+#         env:
+#             PUSH_KEY: ${{ secrets.PUSH_KEY }}
+
+      - name: commit
+        run: |
+          git config --global user.email ${{ secrets.EMAIL }}
+          git config --global user.name ${{ secrets.USER }}
+          git add .
+          git commit -m "update hosts" -a || echo "Nothing to update"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          repository: Sirius2s/litkit
+          # branch: ${{ github.ref }} # github.head_ref
