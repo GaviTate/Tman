@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: Sirius2s/litkit
-          token: ${{ secrets.TOKEN }}
+#           token: ${{ secrets.TOKEN }}
 #           ref: main
 #           ref: $REPO_BRANCH
         
