@@ -20,8 +20,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: Sirius2s/litkit
-#           token: ${{ secrets.TOKEN }}
+          repository: ${{ secrets.REP_LK }}
+          token: ${{ secrets.TOKEN }}
 #           ref: main
 #           ref: $REPO_BRANCH
         
@@ -44,11 +44,11 @@ jobs:
           git config --global user.name ${{ secrets.USER }}
           git add .
           git commit -m "update hosts" -a || echo "Nothing to update"
-          git push "https://${{ secrets.USER }}:${{ secrets.TOKEN }}@github.com/Sirius2s/litkit.git" HEAD:main
+          git push "https://${{ secrets.USER }}:${{ secrets.TOKEN }}@github.com/${{ secrets.REP_LK }}.git" HEAD:main
       
 #       - name: Push changes
 #         uses: ad-m/github-push-action@master
 #         with:
 #           github_token: ${{ secrets.TOKEN }}
-#           repository: Sirius2s/litkit
+#           repository: ${{ secrets.REP_LK }}
 #           # branch: ${{ github.ref }} # github.head_ref
