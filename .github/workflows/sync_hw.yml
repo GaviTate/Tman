@@ -1,7 +1,7 @@
 name: sync-HW
 on:
-#   schedule:
-#     - cron: '11 */4 * * *'
+  schedule:
+    - cron: '1 */6 * * *'
   workflow_dispatch:
 #   watch:
 #     types: started
@@ -17,7 +17,7 @@ jobs:
         uses: wei/git-sync@v3
         with:
           source_repo: ${{ secrets.S_REP_HW }}
-#           source_branch: ${{ secrets.S_BRA_HW }}
+          source_branch: ${{ secrets.S_BRA_HW }}
           destination_repo: ${{ secrets.D_REP_JS }}
           destination_branch: ${{ secrets.D_BRA_HW }}
 #           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} # optional
