@@ -7,15 +7,13 @@ on:
 
 jobs:
   build:
-    env:
-      REPO_URL: ${{ secrets.D_REP_JS }}
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: $REPO_URL
+          repository: ${{ secrets.USER }}/${{ secrets.CO_REP }}
           ref: ${{ secrets.D_BRA_HW }}
 
       - name: Use Node.js ${{ matrix.node-version }}
