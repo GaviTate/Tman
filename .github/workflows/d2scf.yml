@@ -13,8 +13,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: ${{ secrets.D_REP_JS}}
-          ref: ${{ secrets.D_BRA_HW}}
+          repository: ${{ secrets.D_REP_JS }}
+          ref: ${{ secrets.D_BRA_HW }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -29,7 +29,7 @@ jobs:
 # 
       - name: Replace
         run: |
-          wget https://raw.githubusercontent.com/${{ secrets.D_REP_JS}}/${{ secrets.D_BRA_HW}}/replace.sh
+          wget https://raw.githubusercontent.com/${{ secrets.D_REP_JS }}/${{ secrets.D_BRA_HW }}/replace.sh
           sh replace.sh
 
       - name: Zip dir
@@ -43,7 +43,7 @@ jobs:
 # 
       - name: Replace SL
         run: |
-          wget https://raw.githubusercontent.com/${{ secrets.D_REP_JS}}/${{ secrets.D_BRA_HW}}/replace_SL.sh
+          wget https://raw.githubusercontent.com/${{ secrets.D_REP_JS }}/${{ secrets.D_BRA_HW }}/replace_SL.sh
           sh replace_SL.sh
 
       - name: Zip dir SL
