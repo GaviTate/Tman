@@ -1,8 +1,8 @@
 name: d2scf
 
 on:
-#   schedule:
-#     - cron: '30 */6 * * *'
+  schedule:
+    - cron: '30 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -39,9 +39,7 @@ jobs:
           ls -lh myfile.zip
 
       - name: Deploy
-        run: |
-          node tencentscf.js
-          env
+        run: node tencentscf.js
         env:
           STAGE: dev
           SERVERLESS_PLATFORM_VENDOR: tencent
