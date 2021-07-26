@@ -39,7 +39,23 @@ jobs:
           ls -lh myfile.zip
 
       - name: Deploy
-        run: node tencentscf.js
+        run: |
+          node tencentscf.js
+          env
+        env:
+          STAGE: dev
+          SERVERLESS_PLATFORM_VENDOR: tencent
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+          TENCENT_REGION: ${{ secrets.SCF_REGION }}
+          TENCENT_FUNCTION_NAME: ${{ secrets.TENCENT_FUNCTION_NAME }}
+          SCF_REGION: ${{ secrets.SCF_REGION }}
+          JD_COOKIE: ${{ secrets.JD_COOKIE}}
+          PUSH_KEY: ${{ secrets.PUSH_KEY}}
+          QYWX_AM: ${{ secrets.QYWX_AM}}
+          MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS}}
+          FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD}}
+          HELP_AUTHOR: ${{ secrets.HELP_AUTHOR}}        
 # 
       - name: Replace SL
         run: |
@@ -54,3 +70,17 @@ jobs:
 
       - name: Deploy SL
         run: node tencentscf.js
+        env:
+          STAGE: dev
+          SERVERLESS_PLATFORM_VENDOR: tencent
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+          TENCENT_REGION: ${{ secrets.SCF_REGION }}
+          TENCENT_FUNCTION_NAME: ${{ secrets.TENCENT_FUNCTION_NAME_SL }}
+          SCF_REGION: ${{ secrets.SCF_REGION }}
+          JD_COOKIE: ${{ secrets.JD_COOKIE}}
+          PUSH_KEY: ${{ secrets.PUSH_KEY}}
+          QYWX_AM: ${{ secrets.QYWX_AM}}
+          MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS}}
+          FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD}}
+          HELP_AUTHOR: ${{ secrets.HELP_AUTHOR}}   
