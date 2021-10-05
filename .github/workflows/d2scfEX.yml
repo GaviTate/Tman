@@ -32,9 +32,9 @@ jobs:
           done
           sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
-          sed -i '/TZ:/a QYWX_AM: '"$QYWX_AM"'/' JD_tencent_scf/config.yml
-          sed -i '/TZ:/a JD_COOKIE: '"$JD_COOKIE"'/' JD_tencent_scf/config.yml
-          sed -i '/TZ:/a HELP_AUTHOR: '"$HELP_AUTHOR"'/' JD_tencent_scf/config.yml
+          sed -i '/TZ:/a QYWX_AM: '"$QYWX_AM"'/' config.yml
+          sed -i '/TZ:/a JD_COOKIE: '"$JD_COOKIE"'/' config.yml
+          sed -i '/TZ:/a HELP_AUTHOR: '"$HELP_AUTHOR"'/' config.yml
           if [ -d diy ];
           then
             echo 'Dir diy exist, move contents'
