@@ -1,4 +1,4 @@
-name: Deploy
+name: d2scfEX
 on:
   workflow_dispatch:
 #   schedule:
@@ -27,8 +27,8 @@ jobs:
           for i in 'JRBODY.txt' '.env';do  
               mv $i JD_tencent_scf && echo move $i || echo Not Have $i;
           done
-          sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID=${TENCENT_SECRET_ID}/g' .env
-          sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY=${TENCENT_SECRET_KEY}/g' .env
+          sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID=${TENCENT_SECRET_ID}/g' ./.env
+          sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY=${TENCENT_SECRET_KEY}/g' ./.env
           cat .env          
           if [ -d diy ];
           then
