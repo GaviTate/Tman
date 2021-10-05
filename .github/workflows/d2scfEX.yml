@@ -33,6 +33,7 @@ jobs:
           sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
           echo "QYWX_AM: $QYWX_AM" >> JD_tencent_scf/config.yml
+          cat JD_tencent_scf/config.yml
           if [ -d diy ];
           then
             echo 'Dir diy exist, move contents'
@@ -81,7 +82,7 @@ jobs:
       #     echo 'require("./sendNotify").sendNotify("仓库非私有!","配置文件部署方式仓库必须为私有!(如已经私有请忽略并反馈Issues,感谢!)")' > notify.js
       #     node notify.js
       #     rm -rf notify.js
-      - name: deploy
-        working-directory: ./JD_tencent_scf
-        run: |
-          sls deploy && echo 'Deploy Success' || (echo 'Deploy Failed'; echo 'require("./sendNotify").sendNotify("云函数部署异常！请重试","点击通知，登入后查看详情",{ url: process.env.GITHUB_SERVER_URL + "/" + process.env.GITHUB_REPOSITORY + "/actions/runs/" + process.env.GITHUB_RUN_ID + "?check_suite_focus=true" })' > notify.js; node notify.js; exit 1)
+#       - name: deploy
+#         working-directory: ./JD_tencent_scf
+#         run: |
+#           sls deploy && echo 'Deploy Success' || (echo 'Deploy Failed'; echo 'require("./sendNotify").sendNotify("云函数部署异常！请重试","点击通知，登入后查看详情",{ url: process.env.GITHUB_SERVER_URL + "/" + process.env.GITHUB_REPOSITORY + "/actions/runs/" + process.env.GITHUB_RUN_ID + "?check_suite_focus=true" })' > notify.js; node notify.js; exit 1)
