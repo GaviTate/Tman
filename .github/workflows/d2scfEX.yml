@@ -22,14 +22,17 @@ jobs:
         env:
           # EXPERIMENT: ${{ secrets.EXPERIMENT }}
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
-          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}          
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+          QYWX_AM: ${{ secrets.QYWX_AM }}
+          JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          HELP_AUTHOR: ${{ secrets.HELP_AUTHOR }}
         run: |
-          for i in 'JRBODY.txt' '.env';do  
+          for i in 'JRBODY.txt' '.env';do
               mv $i JD_tencent_scf && echo move $i || echo Not Have $i;
           done
           sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
-          cat JD_tencent_scf/.env          
+          echo "QYWX_AM: $QYWX_AM" >> JD_tencent_scf/config.yml
           if [ -d diy ];
           then
             echo 'Dir diy exist, move contents'
