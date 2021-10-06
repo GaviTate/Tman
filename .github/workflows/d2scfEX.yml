@@ -53,7 +53,7 @@ jobs:
       - name: Replace
         working-directory: ./JD_tencent_scf
         run: |
-          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/confg_diy.json
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/config_diy.json
           wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/rpex.sh
           sh rpex.sh
       - uses: actions/setup-node@v2
