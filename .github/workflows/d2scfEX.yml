@@ -1,8 +1,8 @@
 name: d2scfEX
 on:
   workflow_dispatch:
-#   schedule:
-#     - cron: '10 */8 * * *'
+  schedule:
+    - cron: '10 */8 * * *'
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,7 +17,7 @@ jobs:
           ref: ${{ secrets.S_BRA_Z5_C }}
       - name: clone
         run: |
-          git clone --single-branch --branch main https://github.com/zero205/JD_tencent_scf.git
+          git clone --single-branch --branch main https://github.com/${{ secrets.REP_SCF }}.git
       - name: Pre Tasks
         env:
           # EXPERIMENT: ${{ secrets.EXPERIMENT }}
@@ -26,6 +26,8 @@ jobs:
           QYWX_AM: ${{ secrets.QYWX_AM }}
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           HELP_AUTHOR: ${{ secrets.HELP_AUTHOR }}
+          FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD }}
+          MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
         run: |
           for i in 'JRBODY.txt' '.env';do
               mv $i JD_tencent_scf && echo move $i || echo Not Have $i;
@@ -35,6 +37,9 @@ jobs:
           sed -i '/TZ:/a QYWX_AM: '"$QYWX_AM"'' config.yml
           sed -i '/TZ:/a JD_COOKIE: '"$JD_COOKIE"'' config.yml
           sed -i '/TZ:/a HELP_AUTHOR: '"$HELP_AUTHOR"'' config.yml
+          sed -i '/TZ:/a FRUIT_BEAN_CARD: '"$FRUIT_BEAN_CARD"'' config.yml
+          sed -i '/TZ:/a MARKET_COIN_TO_BEANS: '"$MARKET_COIN_TO_BEANS"'' config.yml
+          sed -i '/TZ:/a NOT_RUN: jd_cfd_loop&jd_try' config.yml
           if [ -d diy ];
           then
             echo 'Dir diy exist, move contents'
@@ -45,6 +50,12 @@ jobs:
             echo 'diy.sh exist, execute!'
             bash diy.sh
           fi;
+      - name: Replace
+        working-directory: ./JD_tencent_scf
+        run: |
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/confg_diy.json
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/rpex.sh
+          sh rpex.sh
       - uses: actions/setup-node@v2
       - name: install dependency
         working-directory: ./JD_tencent_scf
@@ -69,8 +80,8 @@ jobs:
           while read line;do
             echo "      $line" >> serverless.yml
           done < ../config.yml
-          cat serverless.yml
-          cat .env
+          # cat serverless.yml
+          # cat .env
           PUSH_VARIS=$(sed -r 's/(process.env.[a-z0-9A-Z\_]+)/\1\n/g' sendNotify.js | sed -rn 's/.*process.env.([a-z0-9A-Z\_]+).*/\1/p' | sort | uniq)
           parameter=$(tr "\n" "|" <<< $PUSH_VARIS)
           parameter=${parameter::-1}
