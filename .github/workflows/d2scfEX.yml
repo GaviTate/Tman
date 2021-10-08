@@ -18,6 +18,12 @@ jobs:
       - name: clone
         run: |
           git clone --single-branch --branch main https://github.com/${{ secrets.REP_SCF }}.git
+      - name: Replace
+        working-directory: ./JD_tencent_scf
+        run: |
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/config_diy.json
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/rpex.sh
+          sh rpex.sh
       - name: Pre Tasks
         env:
           # EXPERIMENT: ${{ secrets.EXPERIMENT }}
@@ -29,9 +35,7 @@ jobs:
           FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD }}
           MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
         run: |
-          for i in 'JRBODY.txt' '.env';do
-              mv $i JD_tencent_scf && echo move $i || echo Not Have $i;
-          done
+          mv .env JD_tencent_scf
           sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
           sed -i '/TZ:/a QYWX_AM: '"$QYWX_AM"'' config.yml
@@ -39,7 +43,8 @@ jobs:
           sed -i '/TZ:/a HELP_AUTHOR: '"$HELP_AUTHOR"'' config.yml
           sed -i '/TZ:/a FRUIT_BEAN_CARD: '"$FRUIT_BEAN_CARD"'' config.yml
           sed -i '/TZ:/a MARKET_COIN_TO_BEANS: '"$MARKET_COIN_TO_BEANS"'' config.yml
-          sed -i '/TZ:/a NOT_RUN: jd_cfd_loop&jd_try' config.yml
+          NOT_RUN=`sed '/.*NOT_RUN:/!d;s/.*\: //' repx.sh`
+          sed -i '/TZ:/a NOT_RUN: $NOT_RUN' config.yml
           if [ -d diy ];
           then
             echo 'Dir diy exist, move contents'
@@ -50,12 +55,6 @@ jobs:
             echo 'diy.sh exist, execute!'
             bash diy.sh
           fi;
-      - name: Replace
-        working-directory: ./JD_tencent_scf
-        run: |
-          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/config_diy.json
-          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/rpex.sh
-          sh rpex.sh
       - uses: actions/setup-node@v2
       - name: install dependency
         working-directory: ./JD_tencent_scf
