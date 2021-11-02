@@ -1,0 +1,45 @@
+name: sync_CM_gitee
+on:
+  schedule:
+    - cron: '21 */12 * * *'
+  workflow_dispatch:
+#   watch:
+#     types: started
+#   push:
+#     branches: [ master ]
+  repository_dispatch:
+    types: sync_CM_gitee
+jobs:
+  repo-sync:
+    env:
+      TOKEN: ${{ secrets.TOKEN }}
+      SSH_CM: ${{ secrets.SSH_CM }}
+      S_REP_CM_GE: ${{ secrets.S_REP_CM_GE }}
+      REPO_BRANCH: master
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: git clone
+        run: |
+          mkdir --parents /root/.ssh
+          echo "$SSH_CM" > /root/.ssh/id_rsa
+          chmod 600 /root/.ssh/id_rsa
+          ssh-keyscan gitee.com > known_hosts
+          git clone -b $REPO_BRANCH $S_REP_CM_GE
+ 
+      - name: commit
+        run: |
+          git config --global user.email ${{ secrets.EMAIL }}
+          git config --global user.name ${{ secrets.USER }}
+          git add .
+          git commit -m "update upstream" -a || echo "Nothing to update"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          branch: remCM_ge          
