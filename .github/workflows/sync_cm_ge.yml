@@ -38,11 +38,11 @@ jobs:
           git add .
           git commit -m "update upstream" -a || echo "Nothing to update"
           
-          print(${{ secrets.D_REP_JS }})
+          # print(${{ secrets.D_REP_JS }})
       
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN }}
-          repository: ${{ secrets.D_REP_JS }}
+          repository: Sirius2s/JSfromGT
           branch: ${{ secrets.D_BRA_CM_GE }}
