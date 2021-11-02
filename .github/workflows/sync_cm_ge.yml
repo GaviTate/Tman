@@ -25,9 +25,9 @@ jobs:
 
       - name: git clone
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_CM" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          cd root && mkdir /.ssh && cd..
+          echo "$SSH_CM" > root/.ssh/id_rsa
+          chmod 600 root/.ssh/id_rsa
           ssh-keyscan gitee.com > known_hosts
           git clone -b $REPO_BRANCH $S_REP_CM_GE
  
