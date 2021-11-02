@@ -42,4 +42,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN }}
-          branch: remCM_ge          
+          repository: ${{ secrets.D_REP_JS }}
+          branch: ${{ secrets.D_BRA_CM_GE }}
