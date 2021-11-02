@@ -18,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          repository: ${{ secrets.S_REP_CM }}
+          ref: ${{ secrets.S_BRA_CM }}
           persist-credentials: false
           fetch-depth: 0
 
@@ -35,12 +37,10 @@ jobs:
           git config --global user.name ${{ secrets.USER }}
           git add .
           git commit -m "update upstream" -a || echo "Nothing to update"
-          
-          # print(${{ secrets.D_REP_JS }})
       
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.TOKEN }}
-          repository: ${{ secrets.D_REP_JS }}
+          repository: ${{ secrets.REP_JS }}
           branch: ${{ secrets.D_BRA_CM_GE }}
