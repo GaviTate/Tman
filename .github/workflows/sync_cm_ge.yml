@@ -1,4 +1,4 @@
-name: sync_CM_gitee
+name: sync_CM_ge
 on:
   schedule:
     - cron: '21 */12 * * *'
@@ -8,7 +8,7 @@ on:
 #   push:
 #     branches: [ master ]
   repository_dispatch:
-    types: sync_CM_gitee
+    types: sync_CM_ge
 jobs:
   repo-sync:
     env:
