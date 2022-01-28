@@ -70,12 +70,14 @@ jobs:
           TENCENT_FUNCTION_NAME: ${{ secrets.TENCENT_FUNCTION_NAME_EX }}
           TENCENT_MEMORYSIZE: ${{ secrets.TENCENT_MEMORYSIZE }}
           TENCENT_TIMEOUT: ${{ secrets.TENCENT_TIMEOUT }}
+          TENCENT_RUNTIME: ${{ secrets.TENCENT_RUNTIME }}
         run: |
           if [[ ! -z $TENCENT_REGION ]]; then sed -i -E 's/region:[^\n]+/region: '"$TENCENT_REGION"'/' serverless.yml; fi;
           if [[ ! -z $TENCENT_FUNCTION_NAME ]]; then sed -i -E 's/^  name:[^\n]+/  name: '"$TENCENT_FUNCTION_NAME"'/' serverless.yml; fi;
           if [[ ! -z $TENCENT_FUNCTION_NAME ]]; then sed -i -E 's/^name:[^\n]+/name: '"$TENCENT_FUNCTION_NAME"'/' serverless.yml; fi;
           if [[ ! -z $TENCENT_MEMORYSIZE ]]; then sed -i -E 's/memorySize:[^\n]+/memorySize: '"$TENCENT_MEMORYSIZE"'/' serverless.yml; fi;
           if [[ ! -z $TENCENT_TIMEOUT ]]; then sed -i -E 's/timeout:[^\n]+/timeout: '"$TENCENT_TIMEOUT"'/' serverless.yml; fi;
+          if [[ ! -z $TENCENT_RUNTIME ]]; then sed -i -E 's/runtime:[^\n]+/runtime: '"$TENCENT_RUNTIME"'/' serverless.yml; fi;
           while read line;do
             echo "      $line" >> serverless.yml
           done < ../config.yml
