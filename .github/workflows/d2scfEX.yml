@@ -35,20 +35,20 @@ jobs:
           FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD }}
           MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
         run: |
-          mv .env JD_tencent_scf
-          sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
-          sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
+          mv .env percollect
+          sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' percollect/.env
+          sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' percollect/.env
           sed -i '/TZ:/a QYWX_AM: '"$QYWX_AM"'' config.yml
           sed -i '/TZ:/a JD_COOKIE: '"$JD_COOKIE"'' config.yml
           sed -i '/TZ:/a HELP_AUTHOR: '"$HELP_AUTHOR"'' config.yml
           sed -i '/TZ:/a FRUIT_BEAN_CARD: '"$FRUIT_BEAN_CARD"'' config.yml
           sed -i '/TZ:/a MARKET_COIN_TO_BEANS: '"$MARKET_COIN_TO_BEANS"'' config.yml
-          NOT_RUN=`sed '/.*NOT_RUN:/!d;s/.*\: //' JD_tencent_scf/rpex.sh`
+          NOT_RUN=`sed '/.*NOT_RUN:/!d;s/.*\: //' percollect/rpex.sh`
           sed -i '/TZ:/a NOT_RUN: '"$NOT_RUN"'' config.yml
           if [ -d diy ];
           then
             echo 'Dir diy exist, move contents'
-            mv -f diy/* JD_tencent_scf/
+            mv -f diy/* percollect/
           fi;
           if [ -f diy.sh ];
           then
@@ -57,13 +57,13 @@ jobs:
           fi;
       - uses: actions/setup-node@v2
       - name: install dependency
-        working-directory: ./JD_tencent_scf
+        working-directory: ./percollect
         run: |
           npm i
           # npm view serverless versions
           npm i -g serverless${{ secrets.TENCENT_SLI_VER }}
       - name: set serverless.yml and push env
-        working-directory: ./JD_tencent_scf
+        working-directory: ./percollect
         env:
           # TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           # TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
@@ -97,6 +97,6 @@ jobs:
       #     node notify.js
       #     rm -rf notify.js
       - name: deploy
-        working-directory: ./JD_tencent_scf
+        working-directory: ./percollect
         run: |
           slt deploy && echo 'Deploy Success' || (echo 'Deploy Failed'; echo 'require("./sendNotify").sendNotify("云函数部署异常！请重试","点击通知，登入后查看详情",{ url: process.env.GITHUB_SERVER_URL + "/" + process.env.GITHUB_REPOSITORY + "/actions/runs/" + process.env.GITHUB_RUN_ID + "?check_suite_focus=true" })' > notify.js; node notify.js; exit 1)
