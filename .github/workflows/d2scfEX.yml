@@ -36,7 +36,8 @@ jobs:
           MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
         run: |
           # mv .env JD_tencent_scf
-          echo 'TENCENT_SECRET_ID=\nTENCENT_SECRET_KEY='>JD_tencent_scf/.env
+          echo 'TENCENT_SECRET_ID='>JD_tencent_scf/.env
+          echo 'TENCENT_SECRET_KEY='>>JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
           echo 'TZ: Asia/Shanghai'>config.yml
