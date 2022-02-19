@@ -35,7 +35,8 @@ jobs:
           FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD }}
           MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
         run: |
-          mv .env JD_tencent_scf
+          # mv .env JD_tencent_scf
+          echo 'TENCENT_SECRET_ID=\nTENCENT_SECRET_KEY='>JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
           sed -i '/TZ:/a QYWX_AM: '"$QYWX_AM"'' config.yml
