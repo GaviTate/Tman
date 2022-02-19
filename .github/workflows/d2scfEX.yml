@@ -39,6 +39,7 @@ jobs:
           echo 'TENCENT_SECRET_ID=\nTENCENT_SECRET_KEY='>JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_ID=/TENCENT_SECRET_ID='"$TENCENT_SECRET_ID"'/' JD_tencent_scf/.env
           sed -i 's/TENCENT_SECRET_KEY=/TENCENT_SECRET_KEY='"$TENCENT_SECRET_KEY"'/' JD_tencent_scf/.env
+          echo 'TZ: Asia/Shanghai'>config.yml
           sed -i '/TZ:/a QYWX_AM: '"$QYWX_AM"'' config.yml
           sed -i '/TZ:/a JD_COOKIE: '"$JD_COOKIE"'' config.yml
           sed -i '/TZ:/a HELP_AUTHOR: '"$HELP_AUTHOR"'' config.yml
