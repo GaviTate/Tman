@@ -1,8 +1,8 @@
 name: d2scfEX
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '10 */8 * * *'
+#   schedule:
+#     - cron: '10 */8 * * *'
 jobs:
   deploy:
     runs-on: ubuntu-latest
