@@ -1,4 +1,4 @@
-name: d2scfEX
+name: d2scfEX_debug
 on:
   workflow_dispatch:
 #   schedule:
