@@ -82,8 +82,8 @@ jobs:
           if [[ ! -z $TENCENT_MEMORYSIZE ]]; then sed -i -E 's/memorySize:[^\n]+/memorySize: '"$TENCENT_MEMORYSIZE"'/' serverless.yml; fi;
           if [[ ! -z $TENCENT_TIMEOUT ]]; then sed -i -E 's/timeout:[^\n]+/timeout: '"$TENCENT_TIMEOUT"'/' serverless.yml; fi;
           if [[ ! -z $TENCENT_RUNTIME ]]; then sed -i -E 's/runtime:[^\n]+/runtime: '"$TENCENT_RUNTIME"'/' serverless.yml; fi;
-          sed -i -E 's/timeout:[^\n]+/eip: true' serverless.yml; 
-          sed -i -E 's/timeout:[^\n]+/publicAccess: true' serverless.yml; 
+          sed -i '/timeout:/a eip: true' serverless.yml; 
+          sed -i '/timeout:/a publicAccess: true' serverless.yml; 
           while read line;do
             echo "      $line" >> serverless.yml
           done < ../config.yml
