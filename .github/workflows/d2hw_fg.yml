@@ -39,6 +39,7 @@ jobs:
       - name: zip files
         working-directory: ./JD_tencent_scf
         run: |
+          rm -rf activity/ backUp/ docker/ icon/
           zip -r script.zip ./*
           ls -lh script.zip
 
