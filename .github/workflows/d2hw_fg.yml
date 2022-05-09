@@ -44,7 +44,7 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v1
-        working-directory: ./JD_tencent_scf
+#         working-directory: ./JD_tencent_scf
         with:
           python-version: 3.7
 
