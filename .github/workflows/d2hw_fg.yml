@@ -1,0 +1,66 @@
+name: d2hw
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '1 */8 * * *'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.repository.owner.id == github.event.sender.id
+    # env:
+    #   PAT: ${{ secrets.TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.REP_SCF }}
+          ref: ${{ secrets.S_BRA_Z5_C }}
+
+      - name: clone
+        run: |
+          git clone --single-branch --branch main https://github.com/${{ secrets.REP_SCF }}.git
+
+      - name: Replace
+        working-directory: ./JD_tencent_scf
+        run: |
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/config_diy.json
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/rpex.sh
+          sh rpex.sh
+          mv index_hw.js index.js
+          mv jdCookie_hw.js jdCookie.js
+
+      - uses: actions/setup-node@v2
+      - name: install dependency
+        working-directory: ./JD_tencent_scf
+        run: |
+          npm i
+          npm i -g serverless
+
+      - name: zip files
+        working-directory: ./JD_tencent_scf
+        run: |
+          zip -r script.zip ./*
+          ls -lh script.zip
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        working-directory: ./JD_tencent_scf
+        with:
+          python-version: 3.7
+
+      - name: Install requirements
+        working-directory: ./JD_tencent_scf
+        run: |
+          echo 'huaweicloudsdkfunctiongraph'>./requirements.txt
+          pip install -r ./requirements.txt
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/d2hw_fg.py
+          wget https://raw.githubusercontent.com/${{ secrets.USER }}/${{ secrets.CO_REP_AC }}/main/notification.py
+        
+      - name: deploy
+        working-directory: ./JD_tencent_scf
+        run: python3 d2hw_fg.py
+        env:
+            QYWX_AM: ${{ secrets.QYWX_AM }}
+            HW_AK: ${{ secrets.HW_AK }}
+            HW_SK: ${{ secrets.HW_SK }}
+            HW_URN: ${{ secrets.HW_URN }}
