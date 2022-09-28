@@ -11,7 +11,7 @@ jobs:
     # env:
     #   PAT: ${{ secrets.TOKEN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: ${{ secrets.REP_SCF }}
           ref: ${{ secrets.S_BRA_Z5_C }}
