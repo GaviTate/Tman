@@ -2,7 +2,7 @@ name: d2hw
 on:
   workflow_dispatch:
   schedule:
-    - cron: '1 6,7,14,15,22,23 * * *'
+    - cron: '1 7,14,15,23 * * *'
 jobs:
   deploy:
     runs-on: ubuntu-latest
